@@ -1,39 +1,235 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lupetto Studio — Reservas</title>
-<meta name="description" content="Reserva tu hora en Lupetto Studio. Estilo elegante, atención de lujo. Valparaíso, Chile.">
-<meta property="og:title" content="Lupetto Studio — Reservas">
-<meta property="og:description" content="Reserva tu hora en Lupetto Studio. Estilo elegante, atención de lujo.">
-<meta property="og:type" content="website">
-<meta name="theme-color" content="#000000">
-<style>
-  :root { --bg:#000; --panel:#111; --text:#eee; --muted:#bdbdbd; --silver:#c0c0c0; --wa:#25D366; }
-  * { box-sizing: border-box; }
-  body { margin:0; background:var(--bg); color:var(--text); font-family:-apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif; }
-  .wrap { max-width: 560px; margin: 40px auto; padding: 20px; }
-  h1 { color: var(--silver); text-align:center; margin: 0 0 6px; font-size: 28px; letter-spacing:.3px; }
-  p.slogan { text-align:center; opacity:.85; margin: 0 0 18px; }
-  .card { background: var(--panel); border:1px solid #222; border-radius: 16px; padding: 16px; }
-  .btn { display:block; width:100%; text-align:center; text-decoration:none; font-weight:800; padding:14px 16px; border-radius:12px; margin:10px 0; }
-  .btn-wa { background: var(--wa); color:#000; }
-  .btn-map { background: var(--silver); color:#000; }
-  .btn-ig  { background: #fff; color:#000; }
-  footer { text-align:center; color:var(--muted); margin-top:16px; font-size:14px; }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lupetto Studio — Reservas</title>
+  <meta name="description" content="Lupetto Studio — Agenda tu cita, conoce nuestros servicios y ubicación." />
+  <meta property="og:title" content="Lupetto Studio — Reservas" />
+  <meta property="og:description" content="Barbería en Valparaíso. Agenda en Fresha. Conoce nuestros servicios y ubicación." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="/" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🐺</text></svg>">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>html, body { scroll-behavior: smooth; background: #000; }</style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>Lupetto Studio — Reservas</h1>
-    <p class="slogan">Donde el estilo se convierte en experiencia</p>
-    <div class="card">
-      <a class="btn btn-wa" href="https://wa.me/56978533990?text=Hola%20quiero%20reservar%20en%20Lupetto%20Studio" target="_blank" rel="noopener">Reservar por WhatsApp</a>
-      <a class="btn btn-map" href="https://maps.app.goo.gl/oVLBDEpznna63Zu96?g_st=ipc" target="_blank" rel="noopener">Abrir ubicación</a>
-      <a class="btn btn-ig" href="https://instagram.com/lupetto.studio" target="_blank" rel="noopener">Instagram @lupetto.studio</a>
-    </div>
-    <footer>Valparaíso, Chile • Lunes a Sábado 10:00–20:00</footer>
-  </div>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    function LupettoBookingPage() {
+      const CONFIG = {
+        brandName: "Lupetto Studio",
+        tagline: "Tu corte, tu estilo",
+        instagram: "@lupetto.studio",
+        address: "Buenos Aires 611, 2340000 Valparaíso, Chile",
+        freshaBookingUrl: "https://www.fresha.com/es/a/luppeto-studio-valparaiso-buenos-aires-611-xp8dw34d",
+        mapsEmbedUrl: "https://www.google.com/maps?q=Buenos%20Aires%20611%2C%202340000%20Valpara%C3%ADso&output=embed",
+        logoTextFallback: "LUPETTO",
+        logoUrl: "logo.svg" // Sube logo.svg o cambia a logo.png si prefieres
+      };
+
+      const hasBooking = CONFIG.freshaBookingUrl && CONFIG.freshaBookingUrl.startsWith("http");
+      const hasMaps = CONFIG.mapsEmbedUrl && CONFIG.mapsEmbedUrl.startsWith("http");
+
+      const [logoOk, setLogoOk] = React.useState(true);
+
+      return (
+        <div className="min-h-screen bg-black text-zinc-100">
+          {/* Header */}
+          <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-black/50 bg-black/70 border-b border-zinc-800">
+            <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                {logoOk ? (
+                  <img
+                    src={CONFIG.logoUrl}
+                    onError={() => setLogoOk(false)}
+                    alt="Lupetto Logo"
+                    className="w-10 h-10 rounded-full border border-zinc-700 object-contain bg-zinc-900"
+                  />
+                ) : (
+                  <div className="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-700 grid place-items-center">
+                    <span className="text-xs tracking-widest">🐺</span>
+                  </div>
+                )}
+                <div>
+                  <div className="text-lg font-semibold tracking-widest">
+                    {logoOk ? "" : CONFIG.logoTextFallback}
+                  </div>
+                  <div className="text-xs text-zinc-400 -mt-1">{CONFIG.tagline}</div>
+                </div>
+              </div>
+              <nav className="hidden md:flex items-center gap-6 text-sm">
+                <a href="#reservas" className="hover:text-white/90">Reservas</a>
+                <a href="#servicios" className="hover:text-white/90">Servicios</a>
+                <a href="#unas" className="hover:text-white/90">Uñas</a>
+                <a href="#nosotros" className="hover:text-white/90">Quiénes somos</a>
+                <a href="#contacto" className="hover:text-white/90">Contacto</a>
+              </nav>
+              <a
+                href="#reservas"
+                className="px-4 py-2 rounded-2xl bg-zinc-100 text-black font-medium hover:bg-white transition"
+              >
+                Reservar ahora
+              </a>
+            </div>
+          </header>
+
+          {/* Hero */}
+          <section className="relative overflow-hidden">
+            <div className="absolute inset-0 opacity-20" style={{background:
+              "radial-gradient(1200px 400px at 50% 0%, rgba(255,255,255,0.15), transparent 60%), radial-gradient(500px 500px at 10% 90%, rgba(160,160,160,0.1), transparent 60%)"}} />
+            <div className="max-w-6xl mx-auto px-4 py-20 md:py-28">
+              <div className="max-w-3xl">
+                <h1 className="text-3xl md:text-5xl font-bold leading-tight">{CONFIG.brandName}</h1>
+                <p className="mt-4 text-zinc-300 md:text-lg">
+                  Un espacio de barbería auténtico en Valparaíso. Atención cercana, estilo masculino y en constante mejora.
+                </p>
+                <div className="mt-8 flex flex-wrap items-center gap-4">
+                  <a href="#reservas" className="px-5 py-3 rounded-2xl bg-zinc-100 text-black font-semibold hover:bg-white transition">Reservar cita</a>
+                  <a href={"https://instagram.com/" + CONFIG.instagram.replace("@","")} target="_blank" rel="noreferrer" className="px-5 py-3 rounded-2xl border border-zinc-700 hover:border-zinc-500">
+                    Instagram {CONFIG.instagram}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Reservas Fresha */}
+          <section id="reservas" className="border-t border-zinc-900 bg-zinc-950/40">
+            <div className="max-w-6xl mx-auto px-4 py-14">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl md:text-3xl font-semibold">Agenda tu cita</h2>
+                <span className="text-xs text-zinc-400">Se procesa en Fresha</span>
+              </div>
+              {hasBooking ? (
+                <div className="rounded-2xl overflow-hidden border border-zinc-800 bg-black">
+                  <iframe src={CONFIG.freshaBookingUrl} title="Reservas Fresha — Lupetto" className="w-full h-[80vh]" loading="lazy"></iframe>
+                </div>
+              ) : (
+                <div className="p-6 rounded-2xl border border-zinc-800 bg-black/40">
+                  <p className="text-zinc-300">Pega tu <span className="font-semibold">link de Fresha</span> en el código.</p>
+                </div>
+              )}
+            </div>
+          </section>
+
+          {/* Servicios */}
+          <section id="servicios" className="border-t border-zinc-900">
+            <div className="max-w-6xl mx-auto px-4 py-14">
+              <h2 className="text-2xl md:text-3xl font-semibold">Servicios</h2>
+              <p className="mt-2 text-zinc-400 max-w-3xl">Los servicios y precios se gestionan desde Fresha y se reflejan aquí.</p>
+              <div className="mt-6 grid md:grid-cols-3 gap-4">
+                {[
+                  { title: "Cortes", desc: "Clásico, moderno, degradados, perfilados." },
+                  { title: "Experiencias", desc: "Toalla caliente, acabados completos, asesoría." },
+                  { title: "Niños", desc: "Corte clásico para los pequeños." },
+                ].map((c,i)=>(
+                  <div key={i} className="rounded-2xl border border-zinc-800 p-5 bg-zinc-950">
+                    <div className="text-lg font-medium">{c.title}</div>
+                    <div className="text-sm text-zinc-400 mt-1">{c.desc}</div>
+                    <a href="#reservas" className="inline-block mt-4 text-sm px-3 py-1.5 rounded-xl bg-zinc-100 text-black font-medium hover:bg-white">Reservar</a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Uñas by Marianne */}
+          <section id="unas" className="border-t border-zinc-900 bg-zinc-950/40">
+            <div className="max-w-6xl mx-auto px-4 py-14">
+              <h2 className="text-2xl md:text-3xl font-semibold">Uñas by Marianne</h2>
+              <p className="mt-2 text-zinc-400 max-w-3xl">Espacio acogedor para manicura y cuidado de uñas. Atención personalizada y diseños modernos.</p>
+              <div className="mt-6 grid md:grid-cols-2 gap-4">
+                {[
+                  { title: "Manicure básica", desc: "Limpieza, limado y esmaltado clásico." },
+                  { title: "Manicure en gel", desc: "Duración extendida con acabado brillante." },
+                  { title: "Diseños personalizados", desc: "Arte en uñas adaptado a tu gusto." },
+                ].map((card, i) => (
+                  <div key={i} className="rounded-2xl border border-zinc-800 p-5 bg-zinc-950">
+                    <div className="text-lg font-medium">{card.title}</div>
+                    <div className="text-sm text-zinc-400 mt-1">{card.desc}</div>
+                    <a href="#reservas" className="inline-block mt-4 text-sm px-3 py-1.5 rounded-xl bg-zinc-100 text-black font-medium hover:bg-white">Reservar</a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Quiénes somos + Mapa */}
+          <section id="nosotros" className="border-t border-zinc-900 bg-zinc-950/40">
+            <div className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-2 gap-8">
+              <div>
+                <h2 className="text-2xl md:text-3xl font-semibold">Quiénes somos</h2>
+                <p className="mt-3 text-zinc-300">
+                  En Lupetto Studio combinamos técnica y cercanía. Nacimos con la idea de ofrecer un espacio honesto donde el foco está en ti: buenos cortes, recomendaciones reales y un ambiente cómodo. Estamos en crecimiento constante y cuidamos cada detalle.
+                </p>
+                <ul className="mt-6 text-zinc-400 space-y-2 text-sm">
+                  <li>• Atención por cita — respeto por tu tiempo.</li>
+                  <li>• Asesoría según tu estilo y rostro (visagismo).</li>
+                  <li>• Productos de calidad para acabado y cuidado.</li>
+                </ul>
+                <div className="mt-6 flex gap-3">
+                  <a href="#reservas" className="px-4 py-2 rounded-2xl bg-zinc-100 text-black font-semibold hover:bg-white">Reservar</a>
+                  <a href={"https://instagram.com/" + CONFIG.instagram.replace("@","")} target="_blank" rel="noreferrer" className="px-4 py-2 rounded-2xl border border-zinc-700 hover:border-zinc-500">Instagram</a>
+                </div>
+              </div>
+              <div className="rounded-2xl overflow-hidden border border-zinc-800">
+                {hasMaps ? (
+                  <iframe src={CONFIG.mapsEmbedUrl} title="Mapa — Lupetto Studio" className="w-full h-[360px]" loading="lazy"></iframe>
+                ) : (
+                  <div className="p-6 bg-black/40 h-full grid place-items-center text-center">
+                    <div>
+                      <div className="font-medium">Inserta el mapa de Google</div>
+                      <p className="text-zinc-400 text-sm mt-2">En Google Maps → Compartir → Insertar un mapa → Copia el src del iframe y pégalo en mapsEmbedUrl.</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </section>
+
+          {/* Contacto (sin WhatsApp) */}
+          <section id="contacto" className="border-t border-zinc-900">
+            <div className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-3 gap-8">
+              <div className="md:col-span-2">
+                <h2 className="text-2xl md:text-3xl font-semibold">Contacto</h2>
+                <div className="mt-4 grid sm:grid-cols-2 gap-4 text-sm">
+                  <div className="rounded-2xl border border-zinc-800 p-4">
+                    <div className="text-zinc-400">Instagram</div>
+                    <a className="mt-1 inline-block text-lg hover:underline" href={"https://instagram.com/" + CONFIG.instagram.replace("@","")} target="_blank" rel="noreferrer">{CONFIG.instagram}</a>
+                  </div>
+                  <div className="rounded-2xl border border-zinc-800 p-4">
+                    <div className="text-zinc-400">Dirección</div>
+                    <div className="mt-1 text-lg">{CONFIG.address}</div>
+                  </div>
+                </div>
+              </div>
+              <div className="md:col-span-1">
+                <div className="rounded-2xl border border-zinc-800 p-5 bg-zinc-950">
+                  <div className="font-medium">Privacidad & datos</div>
+                  <p className="text-sm text-zinc-400 mt-2">Las reservas y el historial se gestionan en Fresha. Esta web no guarda datos sensibles.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Footer */}
+          <footer className="border-t border-zinc-900">
+            <div className="max-w-6xl mx-auto px-4 py-8 text-sm text-zinc-500 flex flex-col md:flex-row items-center justify-between gap-2">
+              <div>© {new Date().getFullYear()} Lupetto Studio. Todos los derechos reservados.</div>
+              <div className="text-zinc-400">Hecho con dedicación — Lupetto</div>
+            </div>
+          </footer>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<LupettoBookingPage />);
+  </script>
 </body>
 </html>
