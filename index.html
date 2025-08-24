@@ -4,8 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Lupetto Studio — Reservas</title>
-  <meta name="description" content="Lupetto Studio — Tu estilo, nuestra pasión. Reserva en Fresha." />
+  <meta name="description" content="Lupetto Studio — Barbería en Valparaíso. Servicios, galería, testimonios y reservas en Fresha." />
   <link rel="icon" href="logo.svg">
+  <!-- Tailwind + React via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
@@ -14,26 +15,27 @@
 </head>
 <body>
   <div id="root"></div>
-
   <script type="text/babel">
     const CONFIG = {
-      freshaBookingUrl: "https://www.fresha.com/es/a/luppeto-studio-valparaiso-buenos-aires-611-xp8dw34d",
+      freshaBookingUrl:
+        "https://www.fresha.com/es/a/luppeto-studio-valparaiso-buenos-aires-611-xp8dw34d",
       instagramUrl: "https://www.instagram.com/lupetto.studio/",
-      logoUrl: "logo.svg",
+      logoUrl: "logo.svg"
     };
 
     function App() {
       return (
         <div className="min-h-screen bg-black text-white font-sans">
-          {/* Header */}
           <header className="flex justify-between items-center p-6 border-b border-zinc-800">
             <div className="flex items-center space-x-3">
-              <img src={CONFIG.logoUrl} alt="Lupetto Studio" className="h-10 w-auto" />
+              <img src={CONFIG.logoUrl} alt="Lupetto Studio" className="h-10" />
               <h1 className="text-xl font-bold">Lupetto Studio</h1>
             </div>
             <nav className="space-x-6">
               <a href="#servicios" className="hover:text-zinc-300">Servicios</a>
-              <a href="#uñas" className="hover:text-zinc-300">Uñas</a>
+              <a href="#galeria" className="hover:text-zinc-300">Galería</a>
+              <a href="#testimonios" className="hover:text-zinc-300">Testimonios</a>
+              <a href="#faq" className="hover:text-zinc-300">FAQ</a>
               <a href="#quienes" className="hover:text-zinc-300">Quiénes somos</a>
               <a
                 href={CONFIG.freshaBookingUrl}
@@ -46,7 +48,6 @@
             </nav>
           </header>
 
-          {/* Hero */}
           <section className="p-12 text-center bg-gradient-to-b from-zinc-900 to-black">
             <h2 className="text-4xl font-bold mb-4">Tu estilo, nuestra pasión</h2>
             <p className="text-zinc-400 mb-6">
@@ -62,46 +63,89 @@
             </a>
           </section>
 
-          {/* Servicios */}
           <section id="servicios" className="p-12 border-b border-zinc-800">
             <h3 className="text-2xl font-semibold mb-6">Servicios</h3>
-            <ul className="space-y-4 text-zinc-300">
-              <li>Corte clásico o moderno – $25.000</li>
-              <li>Perfilado exprés – $15.000</li>
-              <li>Retoque laterales (fade al 0) – $10.000</li>
-              <li>Corte niños (clásico) – $10.000</li>
-            </ul>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="p-6 border border-zinc-800 rounded-xl bg-zinc-950">
+                <h4 className="text-lg font-semibold">Corte clásico o moderno</h4>
+                <p className="text-zinc-400">Incluye asesoría según tu estilo y rostro.</p>
+              </div>
+              <div className="p-6 border border-zinc-800 rounded-xl bg-zinc-950">
+                <h4 className="text-lg font-semibold">Perfilado exprés</h4>
+                <p className="text-zinc-400">Definición rápida de contornos y barba.</p>
+              </div>
+              <div className="p-6 border border-zinc-800 rounded-xl bg-zinc-950">
+                <h4 className="text-lg font-semibold">Retoque laterales (fade al 0)</h4>
+                <p className="text-zinc-400">Refresco de tu corte sin tocar la parte superior.</p>
+              </div>
+              <div className="p-6 border border-zinc-800 rounded-xl bg-zinc-950">
+                <h4 className="text-lg font-semibold">Corte niños</h4>
+                <p className="text-zinc-400">Versión clásica para los más pequeños.</p>
+              </div>
+            </div>
           </section>
 
-          {/* Uñas */}
-          <section id="uñas" className="p-12 border-b border-zinc-800">
-            <h3 className="text-2xl font-semibold mb-6">Uñas by Marianne</h3>
-            <p className="text-zinc-300 mb-4">
-              Espacio dedicado a manicura profesional, cuidado de manos y diseños personalizados.
-            </p>
+          <section id="galeria" className="p-12 border-b border-zinc-800">
+            <h3 className="text-2xl font-semibold mb-6">Galería</h3>
+            <div className="grid md:grid-cols-3 gap-4">
+              {[1,2,3,4,5,6].map((i) => (
+                <div key={i} className="rounded-xl overflow-hidden border border-zinc-800 bg-zinc-900">
+                  <img src={`https://picsum.photos/seed/${i}/400/300`} alt={`Trabajo ${i}`} className="w-full h-48 object-cover" />
+                </div>
+              ))}
+            </div>
           </section>
 
-          {/* Quiénes somos */}
+          <section id="testimonios" className="p-12 border-b border-zinc-800 bg-zinc-950">
+            <h3 className="text-2xl font-semibold mb-6">Testimonios</h3>
+            <div className="grid md:grid-cols-3 gap-6">
+              <blockquote className="p-6 border border-zinc-800 rounded-xl bg-black">
+                <p className="text-zinc-300">“El mejor fade que me he hecho en Valparaíso. Atención de primera.”</p>
+                <footer className="mt-3 text-sm text-zinc-500">— Carlos M.</footer>
+              </blockquote>
+              <blockquote className="p-6 border border-zinc-800 rounded-xl bg-black">
+                <p className="text-zinc-300">“Ambiente cómodo y cortes impecables. 100% recomendado.”</p>
+                <footer className="mt-3 text-sm text-zinc-500">— Andrés R.</footer>
+              </blockquote>
+              <blockquote className="p-6 border border-zinc-800 rounded-xl bg-black">
+                <p className="text-zinc-300">“Volveré siempre, se nota la dedicación y detalle en cada servicio.”</p>
+                <footer className="mt-3 text-sm text-zinc-500">— Felipe G.</footer>
+              </blockquote>
+            </div>
+          </section>
+
+          <section id="faq" className="p-12 border-b border-zinc-800">
+            <h3 className="text-2xl font-semibold mb-6">Preguntas frecuentes</h3>
+            <details className="mb-4 border border-zinc-800 rounded-xl p-4 bg-zinc-950">
+              <summary className="font-semibold cursor-pointer">¿Atienden sin cita?</summary>
+              <p className="mt-2 text-zinc-400">Trabajamos principalmente con reservas para respetar tu tiempo. Sin cita depende de disponibilidad.</p>
+            </details>
+            <details className="mb-4 border border-zinc-800 rounded-xl p-4 bg-zinc-950">
+              <summary className="font-semibold cursor-pointer">¿Cuáles son los métodos de pago?</summary>
+              <p className="mt-2 text-zinc-400">Aceptamos efectivo, débito y transferencia. Próximamente tarjeta y pago online.</p>
+            </details>
+            <details className="mb-4 border border-zinc-800 rounded-xl p-4 bg-zinc-950">
+              <summary className="font-semibold cursor-pointer">¿Cuánto dura un corte exprés?</summary>
+              <p className="mt-2 text-zinc-400">Entre 20 y 25 minutos, según el estilo.</p>
+            </details>
+          </section>
+
           <section id="quienes" className="p-12 border-b border-zinc-800">
             <h3 className="text-2xl font-semibold mb-6">Quiénes somos</h3>
             <p className="text-zinc-300 mb-4">
               En <strong>Lupetto Studio</strong> creemos en una barbería honesta,
               cercana y en constante evolución. Nuestro objetivo es brindar cortes de
-              calidad, un ambiente cómodo y atención personalizada, sin vender humo:
-              trabajamos día a día para mejorar y ofrecerte lo mejor.
+              calidad, un ambiente cómodo y atención personalizada. Trabajamos día a
+              día para mejorar y ofrecerte lo mejor.
             </p>
             <p className="text-zinc-400">
-              Estamos en Buenos Aires 611, Valparaíso. Encuéntranos y vive la
-              experiencia Lupetto.
+              Estamos en Buenos Aires 611, Valparaíso. Encuéntranos y vive la experiencia Lupetto.
             </p>
           </section>
 
-          {/* CTA Reservas */}
           <section className="p-12 text-center">
             <h3 className="text-2xl font-semibold mb-4">Agenda tu cita</h3>
-            <div className="text-zinc-300 mb-4">
-              Reserva de forma segura a través de Fresha.
-            </div>
+            <div className="text-zinc-300 mb-4">Reserva de forma segura a través de Fresha.</div>
             <a
               href={CONFIG.freshaBookingUrl}
               target="_blank"
@@ -112,7 +156,6 @@
             </a>
           </section>
 
-          {/* Footer */}
           <footer className="p-6 border-t border-zinc-800 text-center text-zinc-500">
             <div className="mb-3">
               <a
